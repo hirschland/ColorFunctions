@@ -1,7 +1,8 @@
 function varargout = colormanifolds(play)
 % Different ways of visualising how the combining of colours (i.e.
 % modifying a colour in two dimensions) translates to its effects in 3
-% dimensional colour space (either HSV, xyY, etc.)
+% dimensional colour space (either HSV, xyY, etc.). This function requires
+% the toolbox optprop by Jerker Wagberg.
 %
 % Joshua Harvey 2017
 
