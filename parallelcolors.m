@@ -1,6 +1,11 @@
 function [] = parallelcolors(n,I,L)
 % Demonstrates the higher dimensionality of physical spectral colours by
-% presenting them in parallel coordinate space.
+% presenting them in parallel coordinate space. 
+%        
+%           parallelcolors(n,I,L)
+%
+% Each loop through L generates n colours from random decimal values of a
+% regularly spaced spectrum. Random wavelengths are then boosted I times.
 
 % Each loop (repeated l times) generates n spectral colours from random decimals.
 % In each generation, randomly selected wavelengths are boosted I times by
@@ -11,10 +16,10 @@ function [] = parallelcolors(n,I,L)
 % Joshua Harvey 2017
 
 if nargin==0
-    L=10;n=10;I=10;
+    L=30;n=10;I=10;
 end
 
-figure
+figure('Color',[0 0 0])
 for l = 1:L    
     %V = linspace(380,700,v);
     V = optgetpref('WLRange');
@@ -31,17 +36,17 @@ for l = 1:L
                 MB(m,r,b) = M(m,r,b)*B(b);
             end
         end
-        %MB(MB<1)=0; % put all non-boosted wavelengths to 0
+        MB(MB<1)=0; % put all non-boosted wavelengths to 0
         D{b} = roo2rgb(MB(:,:,b),[],V);
         D{b} = D{b}(:,:)/max(max(D{b}));
         
         P{b} = parallelcoords(MB(:,:,b));
         
         for p = 1:n
-            P{b}(p).Color = [D{b}(p,:) 0.15];
+            P{b}(p).Color = [D{b}(p,:) 0.1]; % set line color and alpha
             P{b}(p).LineWidth = 3;
         end
-        
+        axis off
         hold on
         
     end
