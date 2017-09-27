@@ -124,6 +124,7 @@ elseif strcmp(play,'surface')
     hsvRG = rgb2hsv(rgbRG);
     hueRG = hsvRG(:,:,1);
     
+    figure('Color',[0 0 0]);
     surf(hueRG,rgbRG)
     shading flat
     
@@ -144,9 +145,15 @@ elseif strcmp(play,'surface')
     rgbRG = hsv2rgb(Hr,Sr,Vr) + hsv2rgb(Hg,Sg,Vg);
     hsvRG = rgb2hsv(rgbRG);
     hueRG = hsvRG(:,:,1);
-    figure('Color',[0 0 0]);
     surf(hueRG,rgbRG)
-    shading flat
+    shading flat, axis off
+    axis vis3d;
+    camzoom(1.3)
+    
+    for i = 1:1000
+        view([.3*i 20])
+        pause(0.01)
+    end
     
 elseif strcmp(play,'physical')
     %% physical colours (wavelengths) %490-700 are opposite
@@ -259,15 +266,15 @@ else if strcmp(play,'xxy')
             Y = (h1Y.*h1scale)+(h2Y.*h2scale);
             Z = (h1Z.*h1scale)+(h2Z.*h2scale);
             
-            RGB = xyz2rgb(v*X,v*Y,v*Z); % imshow(RGB);
+            RGB = xyz2rgb2(v*X,v*Y,v*Z); % imshow(RGB);
             
             % convert to chromaticity
             [x,y,Yc] = xyz2xyy(X,Y,Z);
             
             % figure, surf(X,Y,Z,RGB); shading flat
-            surf(x,y,log(Y),RGB); shading flat, hold on
-            xlim([0 .8])
-            ylim([0 .8])
+            surf(x-.0,y-.0,log(Y),RGB); shading flat, hold on
+            xlim([-.33 .99]) % centre rotation to white at 0.33, 0.33
+            ylim([-.33 .99])
             axis off
             view([a e])
             pause(0.1)
@@ -275,9 +282,9 @@ else if strcmp(play,'xxy')
             e=8*sin(i/15) +52;
             ax=gca;
             %         ax.DataAspectRatio = [2 2 1];
-            %         if i*j == 1
-            %             camzoom(1)
-            %         end
+                     if i*j == 1
+                         camzoom(1.5)
+                     end
             axis vis3d;
         end
         
